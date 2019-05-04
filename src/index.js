@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class App extends React.Component {
-    // First function called when this class is created
+    // First function called when this class is created; not required
     constructor(props){
         // Reference to the parents constructor function; React.Component constructor
         super(props);
 
         this.state = {
-            lat: null // state number initializing with null
+            lat: null, // state number initializing with null
+            errorMessage: ''
         };
 
         // Gets executed once when this class is created
@@ -20,12 +21,22 @@ class App extends React.Component {
                 });
             },
             // Failed Callback
-            (err) => console.log(err)
+            (err) => {
+                this.setState({
+                    errorMessage: err.message
+                });
+            }
         );
     }
 
+    // App component will render 2 times; first when app boots up and a second time when state is updated
     render(){
-        return <div>Latitude: {this.state.lat}</div>;
+        return (<div>
+                Latitude: {this.state.lat}
+                <br />
+                Error: {this.state.errorMessage}
+                </div>
+            );
     }
 }
 
