@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class App extends React.Component {
-    // First function called when this class is created; not required
+    // First function called when this class is created; not required; Initialize state object
     constructor(props){
         // Reference to the parents constructor function; React.Component constructor
         super(props);
@@ -11,7 +11,9 @@ class App extends React.Component {
             lat: null, // state number initializing with null
             errorMessage: ''
         };
+    }
 
+    componentDidMount(){
         // Gets executed once when this class is created
         window.navigator.geolocation.getCurrentPosition(
             // Success Callback
