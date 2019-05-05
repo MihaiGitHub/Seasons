@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SeasonDisplay from './SeasonDisplay';
 
 class App extends React.Component {
     // Babel will take this and implement the constructor function
@@ -29,10 +30,12 @@ class App extends React.Component {
     // App component will render 2 times; first when app boots up and a second time when state is updated
     render(){
         if(this.state.errorMessage && !this.state.lat){
-            return <div>Error: {this.state.errorMessage}</div>
+            return <div>Error: {this.state.errorMessage}</div>;
         }
+
         if(!this.state.errorMessage && this.state.lat){
-            return <div>Latitude: {this.state.lat}</div>
+            // When component rerenders all children will be rerender also
+            return <SeasonDisplay lat={this.state.lat} />;
         }
 
         return <div>Loading!</div>;
