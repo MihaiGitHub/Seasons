@@ -2,16 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class App extends React.Component {
-    // First function called when this class is created; not required; Initialize state object
-    constructor(props){
-        // Reference to the parents constructor function; React.Component constructor
-        super(props);
-
-        this.state = {
-            lat: null, // state number initializing with null
-            errorMessage: ''
-        };
-    }
+    // Babel will take this and implement the constructor function
+    state = {
+        lat: null, // state number initializing with null
+        errorMessage: ''
+    };
 
     componentDidMount(){
         // Gets executed once when this class is created
