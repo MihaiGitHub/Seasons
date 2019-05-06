@@ -28,8 +28,7 @@ class App extends React.Component {
         );
     }
 
-    // App component will render 2 times; first when app boots up and a second time when state is updated
-    render(){
+    renderContent(){
         if(this.state.errorMessage && !this.state.lat){
             return <div>Error: {this.state.errorMessage}</div>;
         }
@@ -40,6 +39,15 @@ class App extends React.Component {
         }
 
         return <Spinner message="Please accept location request" />;
+    }
+
+    // App component will render 2 times; first when app boots up and a second time when state is updated
+    render(){
+        return (
+            <div className="border red">
+                {this.renderContent()}
+            </div>
+        );
     }
 }
 
