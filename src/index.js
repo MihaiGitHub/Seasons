@@ -2,21 +2,11 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import SeasonDisplay from './SeasonDisplay';
 import Spinner from './Spinner';
+import useLocation from './useLocation';
 
 const App = () => {
-    // lat - value of the state property; setLat - function we use to change that value
-    const [lat, setLat] = useState(null);
-    const [errorMessage, setErrorMessage] = useState('');
-
-    useEffect(() => {
-        // Gets executed once when this class is created
-        window.navigator.geolocation.getCurrentPosition(
-            // Success Callback
-            position => setLat(position.coords.latitude),
-            // Failed Callback
-            err => setErrorMessage(err.message)
-        );
-    }, []); // Only run this function one time for the entire component lifecycle
+    // Pull lat and errorMessage piece of state from useLocation
+    const [lat, errorMessage] = useLocation();
 
     let content;
     if(errorMessage){
