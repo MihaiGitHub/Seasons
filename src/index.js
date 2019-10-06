@@ -1,54 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import SeasonDisplay from './SeasonDisplay';
 import Spinner from './Spinner';
 
-class App extends React.Component {
-    // Babel will take this and implement the constructor function
-    state = {
-        lat: null, // state number initializing with null
-        errorMessage: ''
-    };
+const App = () => {
+    // lat - value of the state property; setLat - function we use to change that value
+    const [lat, setLat] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
 
-    componentDidMount(){
+    useEffect(() => {
         // Gets executed once when this class is created
         window.navigator.geolocation.getCurrentPosition(
             // Success Callback
-            (position) => {
-                this.setState({
-                    lat: position.coords.latitude
-                });
-            },
+            position => setLat(position.coords.latitude),
             // Failed Callback
-            (err) => {
-                this.setState({
-                    errorMessage: err.message
-                });
-            }
+            err => setErrorMessage(err.message)
         );
+    }, []); // Only run this function one time for the entire component lifecycle
+
+    let content;
+    if(errorMessage){
+        content = <div>Error: {errorMessage}</div>
+    } else if (lat){
+        content = <SeasonDisplay lat={lat} />;
+    } else {
+        content = <Spinner message="Please accept location request" />;   
     }
 
-    renderContent(){
-        if(this.state.errorMessage && !this.state.lat){
-            return <div>Error: {this.state.errorMessage}</div>;
-        }
-
-        if(!this.state.errorMessage && this.state.lat){
-            // When component rerenders all children will be rerender also
-            return <SeasonDisplay lat={this.state.lat} />;
-        }
-
-        return <Spinner message="Please accept location request" />;
-    }
-
-    // App component will render 2 times; first when app boots up and a second time when state is updated
-    render(){
-        return (
-            <div className="border red">
-                {this.renderContent()}
-            </div>
-        );
-    }
-}
+    return <div className="border red">{content}</div>
+};
 
 ReactDOM.render(<App />, document.querySelector('#root'));
